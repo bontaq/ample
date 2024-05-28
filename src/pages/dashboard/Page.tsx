@@ -1,6 +1,6 @@
 const Page = () => {
   return (
-    <h3>landing</h3>
+    <h1>dashboard</h1>
   )
 }
 

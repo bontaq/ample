@@ -3,13 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink } from '@apollo/client';
+
+const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: new HttpLink({
+      uri: "https://enjoyed-maggot-92.hasura.app/v1/graphql",
+      headers: {
+        "x-hasura-access-key":
+          "fU9j4fRMA6gn4vr0863L8xeuaecDA8vBbxW3JVjkd9IhfYiaGiTxog81oYKZ2Jna",
+      },
+    }),
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>
 );
 
