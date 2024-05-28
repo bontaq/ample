@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -2086,3 +2087,11 @@ export type Visits_Variance_Fields = {
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
 };
+
+export type AllPatientsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllPatientsQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', name: string }> };
+
+
+export const AllPatientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allPatients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AllPatientsQuery, AllPatientsQueryVariables>;
