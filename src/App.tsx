@@ -1,6 +1,6 @@
-import { Route, Switch } from 'wouter';
-import Landing from './pages/landing/Page';
-import Dashboard from './pages/dashboard/Page';
+import { Route, Switch } from "wouter";
+import Landing from "./pages/landing/Page";
+import Dashboard from "./pages/dashboard/Page";
 
 function App() {
   return (

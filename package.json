@@ -12,23 +12,27 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.97",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
     "graphql": "^16.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "wouter": "^3.1.3"
+  },
+  "devDependencies": {
+    "prettier": "3.2.5",
+    "typescript": "^4.9.5",
+    "@types/node": "^16.18.97",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "gql-gen": "graphql-codegen"
+    "gql-gen": "graphql-codegen",
+    "format": "npx prettier . --write"
   },
   "eslintConfig": {
     "extends": [
