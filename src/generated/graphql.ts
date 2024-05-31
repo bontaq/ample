@@ -180,6 +180,13 @@ export type Addresses_Mutation_Response = {
   returning: Array<Addresses>;
 };
 
+/** input type for inserting object relation for remote table "addresses" */
+export type Addresses_Obj_Rel_Insert_Input = {
+  data: Addresses_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Addresses_On_Conflict>;
+};
+
 /** on_conflict condition type for table "addresses" */
 export type Addresses_On_Conflict = {
   constraint: Addresses_Constraint;
@@ -745,6 +752,13 @@ export type Nurses_Mutation_Response = {
   returning: Array<Nurses>;
 };
 
+/** input type for inserting object relation for remote table "nurses" */
+export type Nurses_Obj_Rel_Insert_Input = {
+  data: Nurses_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Nurses_On_Conflict>;
+};
+
 /** on_conflict condition type for table "nurses" */
 export type Nurses_On_Conflict = {
   constraint: Nurses_Constraint;
@@ -883,11 +897,37 @@ export enum Order_By {
 /** columns and relationships of "patients" */
 export type Patients = {
   __typename?: 'patients';
+  /** An object relationship */
+  address: Addresses;
   address_id: Scalars['Int']['output'];
   email: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
+  /** An array relationship */
+  visits: Array<Visits>;
+  /** An aggregate relationship */
+  visits_aggregate: Visits_Aggregate;
+};
+
+
+/** columns and relationships of "patients" */
+export type PatientsVisitsArgs = {
+  distinct_on?: InputMaybe<Array<Visits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Visits_Order_By>>;
+  where?: InputMaybe<Visits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "patients" */
+export type PatientsVisits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Visits_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Visits_Order_By>>;
+  where?: InputMaybe<Visits_Bool_Exp>;
 };
 
 /** aggregated selection of "patients" */
@@ -932,11 +972,14 @@ export type Patients_Bool_Exp = {
   _and?: InputMaybe<Array<Patients_Bool_Exp>>;
   _not?: InputMaybe<Patients_Bool_Exp>;
   _or?: InputMaybe<Array<Patients_Bool_Exp>>;
+  address?: InputMaybe<Addresses_Bool_Exp>;
   address_id?: InputMaybe<Int_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   phone?: InputMaybe<String_Comparison_Exp>;
+  visits?: InputMaybe<Visits_Bool_Exp>;
+  visits_aggregate?: InputMaybe<Visits_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "patients" */
@@ -953,11 +996,13 @@ export type Patients_Inc_Input = {
 
 /** input type for inserting data into table "patients" */
 export type Patients_Insert_Input = {
+  address?: InputMaybe<Addresses_Obj_Rel_Insert_Input>;
   address_id?: InputMaybe<Scalars['Int']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  visits?: InputMaybe<Visits_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -998,11 +1043,13 @@ export type Patients_On_Conflict = {
 
 /** Ordering options when selecting data from "patients". */
 export type Patients_Order_By = {
+  address?: InputMaybe<Addresses_Order_By>;
   address_id?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   phone?: InputMaybe<Order_By>;
+  visits_aggregate?: InputMaybe<Visits_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: patients */
@@ -1366,9 +1413,9 @@ export type Query_Root = {
   pharmacies_aggregate: Pharmacies_Aggregate;
   /** fetch data from the table: "pharmacies" using primary key columns */
   pharmacies_by_pk?: Maybe<Pharmacies>;
-  /** fetch data from the table: "visits" */
+  /** An array relationship */
   visits: Array<Visits>;
-  /** fetch aggregated fields from the table: "visits" */
+  /** An aggregate relationship */
   visits_aggregate: Visits_Aggregate;
   /** fetch data from the table: "visits" using primary key columns */
   visits_by_pk?: Maybe<Visits>;
@@ -1523,9 +1570,9 @@ export type Subscription_Root = {
   pharmacies_by_pk?: Maybe<Pharmacies>;
   /** fetch data from the table in a streaming manner: "pharmacies" */
   pharmacies_stream: Array<Pharmacies>;
-  /** fetch data from the table: "visits" */
+  /** An array relationship */
   visits: Array<Visits>;
-  /** fetch aggregated fields from the table: "visits" */
+  /** An aggregate relationship */
   visits_aggregate: Visits_Aggregate;
   /** fetch data from the table: "visits" using primary key columns */
   visits_by_pk?: Maybe<Visits>;
@@ -1707,6 +1754,9 @@ export type Visits = {
   id: Scalars['Int']['output'];
   medication: Scalars['String']['output'];
   note?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  nurse?: Maybe<Nurses>;
+  nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
   patient_id: Scalars['Int']['output'];
   pharmacy_id?: Maybe<Scalars['Int']['output']>;
@@ -1719,6 +1769,17 @@ export type Visits_Aggregate = {
   __typename?: 'visits_aggregate';
   aggregate?: Maybe<Visits_Aggregate_Fields>;
   nodes: Array<Visits>;
+};
+
+export type Visits_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Visits_Aggregate_Bool_Exp_Count>;
+};
+
+export type Visits_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Visits_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Visits_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "visits" */
@@ -1744,6 +1805,28 @@ export type Visits_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "visits" */
+export type Visits_Aggregate_Order_By = {
+  avg?: InputMaybe<Visits_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Visits_Max_Order_By>;
+  min?: InputMaybe<Visits_Min_Order_By>;
+  stddev?: InputMaybe<Visits_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Visits_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Visits_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Visits_Sum_Order_By>;
+  var_pop?: InputMaybe<Visits_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Visits_Var_Samp_Order_By>;
+  variance?: InputMaybe<Visits_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "visits" */
+export type Visits_Arr_Rel_Insert_Input = {
+  data: Array<Visits_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Visits_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Visits_Avg_Fields = {
   __typename?: 'visits_avg_fields';
@@ -1751,10 +1834,24 @@ export type Visits_Avg_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "visits" */
+export type Visits_Avg_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "visits". All fields are combined with a logical 'AND'. */
@@ -1770,6 +1867,8 @@ export type Visits_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   medication?: InputMaybe<String_Comparison_Exp>;
   note?: InputMaybe<String_Comparison_Exp>;
+  nurse?: InputMaybe<Nurses_Bool_Exp>;
+  nurse_id?: InputMaybe<Int_Comparison_Exp>;
   pain_level?: InputMaybe<Int_Comparison_Exp>;
   patient_id?: InputMaybe<Int_Comparison_Exp>;
   pharmacy_id?: InputMaybe<Int_Comparison_Exp>;
@@ -1789,6 +1888,7 @@ export type Visits_Inc_Input = {
   duration?: InputMaybe<Scalars['Int']['input']>;
   heart_rate?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
   patient_id?: InputMaybe<Scalars['Int']['input']>;
   pharmacy_id?: InputMaybe<Scalars['Int']['input']>;
@@ -1805,6 +1905,8 @@ export type Visits_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  nurse?: InputMaybe<Nurses_Obj_Rel_Insert_Input>;
+  nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
   patient_id?: InputMaybe<Scalars['Int']['input']>;
   pharmacy_id?: InputMaybe<Scalars['Int']['input']>;
@@ -1823,11 +1925,30 @@ export type Visits_Max_Fields = {
   id?: Maybe<Scalars['Int']['output']>;
   medication?: Maybe<Scalars['String']['output']>;
   note?: Maybe<Scalars['String']['output']>;
+  nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
   patient_id?: Maybe<Scalars['Int']['output']>;
   pharmacy_id?: Maybe<Scalars['Int']['output']>;
   systolic_pressure?: Maybe<Scalars['Int']['output']>;
   tolerance?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "visits" */
+export type Visits_Max_Order_By = {
+  administration_location?: InputMaybe<Order_By>;
+  administration_time?: InputMaybe<Order_By>;
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  medication?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
+  tolerance?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1841,11 +1962,30 @@ export type Visits_Min_Fields = {
   id?: Maybe<Scalars['Int']['output']>;
   medication?: Maybe<Scalars['String']['output']>;
   note?: Maybe<Scalars['String']['output']>;
+  nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
   patient_id?: Maybe<Scalars['Int']['output']>;
   pharmacy_id?: Maybe<Scalars['Int']['output']>;
   systolic_pressure?: Maybe<Scalars['Int']['output']>;
   tolerance?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "visits" */
+export type Visits_Min_Order_By = {
+  administration_location?: InputMaybe<Order_By>;
+  administration_time?: InputMaybe<Order_By>;
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  medication?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
+  tolerance?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "visits" */
@@ -1874,6 +2014,8 @@ export type Visits_Order_By = {
   id?: InputMaybe<Order_By>;
   medication?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
+  nurse?: InputMaybe<Nurses_Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
   pain_level?: InputMaybe<Order_By>;
   patient_id?: InputMaybe<Order_By>;
   pharmacy_id?: InputMaybe<Order_By>;
@@ -1905,6 +2047,8 @@ export enum Visits_Select_Column {
   /** column name */
   Note = 'note',
   /** column name */
+  NurseId = 'nurse_id',
+  /** column name */
   PainLevel = 'pain_level',
   /** column name */
   PatientId = 'patient_id',
@@ -1926,6 +2070,7 @@ export type Visits_Set_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
   patient_id?: InputMaybe<Scalars['Int']['input']>;
   pharmacy_id?: InputMaybe<Scalars['Int']['input']>;
@@ -1940,10 +2085,24 @@ export type Visits_Stddev_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "visits" */
+export type Visits_Stddev_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -1953,10 +2112,24 @@ export type Visits_Stddev_Pop_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "visits" */
+export type Visits_Stddev_Pop_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -1966,10 +2139,24 @@ export type Visits_Stddev_Samp_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "visits" */
+export type Visits_Stddev_Samp_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "visits" */
@@ -1990,6 +2177,7 @@ export type Visits_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
   patient_id?: InputMaybe<Scalars['Int']['input']>;
   pharmacy_id?: InputMaybe<Scalars['Int']['input']>;
@@ -2004,10 +2192,24 @@ export type Visits_Sum_Fields = {
   duration?: Maybe<Scalars['Int']['output']>;
   heart_rate?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
   patient_id?: Maybe<Scalars['Int']['output']>;
   pharmacy_id?: Maybe<Scalars['Int']['output']>;
   systolic_pressure?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "visits" */
+export type Visits_Sum_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "visits" */
@@ -2028,6 +2230,8 @@ export enum Visits_Update_Column {
   Medication = 'medication',
   /** column name */
   Note = 'note',
+  /** column name */
+  NurseId = 'nurse_id',
   /** column name */
   PainLevel = 'pain_level',
   /** column name */
@@ -2056,10 +2260,24 @@ export type Visits_Var_Pop_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "visits" */
+export type Visits_Var_Pop_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -2069,10 +2287,24 @@ export type Visits_Var_Samp_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "visits" */
+export type Visits_Var_Samp_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -2082,16 +2314,38 @@ export type Visits_Variance_Fields = {
   duration?: Maybe<Scalars['Float']['output']>;
   heart_rate?: Maybe<Scalars['Float']['output']>;
   id?: Maybe<Scalars['Float']['output']>;
+  nurse_id?: Maybe<Scalars['Float']['output']>;
   pain_level?: Maybe<Scalars['Float']['output']>;
   patient_id?: Maybe<Scalars['Float']['output']>;
   pharmacy_id?: Maybe<Scalars['Float']['output']>;
   systolic_pressure?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by variance() on columns of table "visits" */
+export type Visits_Variance_Order_By = {
+  diastolic_pressure?: InputMaybe<Order_By>;
+  duration?: InputMaybe<Order_By>;
+  heart_rate?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nurse_id?: InputMaybe<Order_By>;
+  pain_level?: InputMaybe<Order_By>;
+  patient_id?: InputMaybe<Order_By>;
+  pharmacy_id?: InputMaybe<Order_By>;
+  systolic_pressure?: InputMaybe<Order_By>;
+};
+
+export type GetPatientQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetPatientQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', name: string, phone: string, email: string, visits: Array<{ __typename?: 'visits', administration_location: string, administration_time: any, nurse?: { __typename?: 'nurses', name: string, phone: string } | null }> }> };
+
 export type AllPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPatientsQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', name: string }> };
+export type AllPatientsQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', id: number, name: string }> };
 
 
-export const AllPatientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allPatients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AllPatientsQuery, AllPatientsQueryVariables>;
+export const GetPatientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPatient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"visits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"administration_location"}},{"kind":"Field","name":{"kind":"Name","value":"administration_time"}},{"kind":"Field","name":{"kind":"Name","value":"nurse"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPatientQuery, GetPatientQueryVariables>;
+export const AllPatientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allPatients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AllPatientsQuery, AllPatientsQueryVariables>;
