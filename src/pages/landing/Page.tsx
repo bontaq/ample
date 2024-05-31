@@ -17,9 +17,11 @@ const Page = () => {
   return (
     <div>
       <ul>
-        {data?.patients.map((patient) =>
-          <li><Link to={`/patient/${patient.id}`}>{patient.name}</Link></li>
-        )}
+        {data?.patients.map((patient) => (
+          <li>
+            <Link to={`/patient/${patient.id}`}>{patient.name}</Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { RouteComponentProps } from "wouter";
 import { gql } from "../../generated";
-import PatientInfo from './PatientInfo';
+import Patient from "./Patient";
+import Visits from "./Visits";
 
-type PageType = React.ComponentType<RouteComponentProps<{ id: string }>>
+type PageType = React.ComponentType<RouteComponentProps<{ id: string }>>;
 
 const GET_PATIENT = gql(`
   query getPatient($id: Int!) {
@@ -21,11 +22,11 @@ const GET_PATIENT = gql(`
       }
     }
   }
-`)
+`);
 
 const Page: PageType = ({ params }) => {
-  const { loading, data , error } = useQuery(GET_PATIENT, {
-    variables: { id: parseInt(params.id) }
+  const { loading, data, error } = useQuery(GET_PATIENT, {
+    variables: { id: parseInt(params.id) },
   });
 
   if (loading) {
@@ -33,15 +34,19 @@ const Page: PageType = ({ params }) => {
   }
 
   if (error) {
-    return <h2>error</h2>
+    return <h2>error</h2>;
   }
 
   return (
     <div>
-        {data?.patients.map(patient => <PatientInfo {...patient} />)}
-        {params.id}
+      {data?.patients.map((patient) => (
+        <>
+          <Patient {...patient} />
+          <Visits visits={patient.visits} />
+        </>
+      ))}
     </div>
-  )
+  );
 };
 
 export default Page;
