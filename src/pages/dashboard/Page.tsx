@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { RouteComponentProps } from "wouter";
 import { gql } from "../../generated";
+import Container from "../../design/Container";
 import Patient from "./Patient";
 import Visits from "./Visits";
 
@@ -15,6 +16,13 @@ const GET_PATIENT = gql(`
       visits {
         administration_location
         administration_time
+        medication
+        pain_level
+        heart_rate
+        systolic_pressure
+        diastolic_pressure
+        tolerance
+        note
         nurse {
           name
           phone
@@ -38,14 +46,14 @@ const Page: PageType = ({ params }) => {
   }
 
   return (
-    <div>
+    <Container>
       {data?.patients.map((patient) => (
         <>
           <Patient {...patient} />
           <Visits visits={patient.visits} />
         </>
       ))}
-    </div>
+    </Container>
   );
 };
 

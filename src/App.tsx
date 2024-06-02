@@ -1,16 +1,16 @@
 import { Route, Switch } from "wouter";
 import Landing from "./pages/landing/Page";
 import Dashboard from "./pages/dashboard/Page";
+import Header from "./Header";
 
-function App() {
-  return (
-    <div className="App">
-      <Switch>
-        <Route path="/" component={Landing} />
-        <Route path="/patient/:id" component={Dashboard} />
-      </Switch>
-    </div>
-  );
-}
+const App = () => (
+  <div className="App">
+    <Header />
+    <Switch>
+      <Route path="/" component={Landing} />
+      <Route path="/patient/:id" component={Dashboard} />
+    </Switch>
+  </div>
+);
 
 export default App;

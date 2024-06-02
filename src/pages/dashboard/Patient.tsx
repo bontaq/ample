@@ -7,8 +7,8 @@ type Props = {
 const Patient = ({ name, phone, email }: Props) => (
   <div>
     <h1>{name}</h1>
-    <h2>{phone}</h2>
-    <h2>{email}</h2>
+    <p>{phone}</p>
+    <p>{email}</p>
   </div>
 );
 

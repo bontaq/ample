@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n": types.GetPatientDocument,
+    "\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        medication\n        pain_level\n        heart_rate\n        systolic_pressure\n        diastolic_pressure\n        tolerance\n        note\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n": types.GetPatientDocument,
     "\n  query allPatients {\n    patients {\n      id\n      name\n    }\n  }\n": types.AllPatientsDocument,
 };
 
@@ -34,7 +34,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        medication\n        pain_level\n        heart_rate\n        systolic_pressure\n        diastolic_pressure\n        tolerance\n        note\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getPatient($id: Int!) {\n    patients(where: {id: {_eq: $id}}) {\n      name\n      phone\n      email\n      visits {\n        administration_location\n        administration_time\n        medication\n        pain_level\n        heart_rate\n        systolic_pressure\n        diastolic_pressure\n        tolerance\n        note\n        nurse {\n          name\n          phone\n        }\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
