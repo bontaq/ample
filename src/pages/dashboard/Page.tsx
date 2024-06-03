@@ -1,8 +1,9 @@
+import { styled } from "styled-components";
 import { useQuery } from "@apollo/client";
 import { RouteComponentProps } from "wouter";
 import { gql } from "../../generated";
-import Container from "../../design/Container";
 import Patient from "./Patient";
+import Summary from "./Summary";
 import Visits from "./Visits";
 
 type PageType = React.ComponentType<RouteComponentProps<{ id: string }>>;
@@ -13,10 +14,11 @@ const GET_PATIENT = gql(`
       name
       phone
       email
-      visits {
+      visits(order_by: { administration_time: desc }) {
         administration_location
         administration_time
         medication
+        medication_amount
         pain_level
         heart_rate
         systolic_pressure
@@ -45,16 +47,32 @@ const Page: PageType = ({ params }) => {
     return <h2>error</h2>;
   }
 
+  if (data?.patients && data?.patients.length === 0) {
+    return <h2>Patient could not be found, patient id: {params.id}</h2>;
+  }
+
+  if (data?.patients && data?.patients.length > 1) {
+    return <h2>Data integrity problem with patient id: {params.id}</h2>;
+  }
+
   return (
     <Container>
       {data?.patients.map((patient) => (
         <>
           <Patient {...patient} />
-          <Visits visits={patient.visits} />
+          <div>
+            <Summary visits={patient.visits} />
+            <Visits visits={patient.visits} />
+          </div>
         </>
       ))}
     </Container>
   );
 };
+
+const Container = styled.div`
+  margin-top: 25px;
+  display: flex;
+`;
 
 export default Page;

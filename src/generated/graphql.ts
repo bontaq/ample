@@ -1753,6 +1753,7 @@ export type Visits = {
   heart_rate?: Maybe<Scalars['Int']['output']>;
   id: Scalars['Int']['output'];
   medication: Scalars['String']['output'];
+  medication_amount?: Maybe<Scalars['String']['output']>;
   note?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   nurse?: Maybe<Nurses>;
@@ -1866,6 +1867,7 @@ export type Visits_Bool_Exp = {
   heart_rate?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   medication?: InputMaybe<String_Comparison_Exp>;
+  medication_amount?: InputMaybe<String_Comparison_Exp>;
   note?: InputMaybe<String_Comparison_Exp>;
   nurse?: InputMaybe<Nurses_Bool_Exp>;
   nurse_id?: InputMaybe<Int_Comparison_Exp>;
@@ -1904,6 +1906,7 @@ export type Visits_Insert_Input = {
   heart_rate?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
+  medication_amount?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   nurse?: InputMaybe<Nurses_Obj_Rel_Insert_Input>;
   nurse_id?: InputMaybe<Scalars['Int']['input']>;
@@ -1924,6 +1927,7 @@ export type Visits_Max_Fields = {
   heart_rate?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   medication?: Maybe<Scalars['String']['output']>;
+  medication_amount?: Maybe<Scalars['String']['output']>;
   note?: Maybe<Scalars['String']['output']>;
   nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
@@ -1942,6 +1946,7 @@ export type Visits_Max_Order_By = {
   heart_rate?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   medication?: InputMaybe<Order_By>;
+  medication_amount?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
   nurse_id?: InputMaybe<Order_By>;
   pain_level?: InputMaybe<Order_By>;
@@ -1961,6 +1966,7 @@ export type Visits_Min_Fields = {
   heart_rate?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   medication?: Maybe<Scalars['String']['output']>;
+  medication_amount?: Maybe<Scalars['String']['output']>;
   note?: Maybe<Scalars['String']['output']>;
   nurse_id?: Maybe<Scalars['Int']['output']>;
   pain_level?: Maybe<Scalars['Int']['output']>;
@@ -1979,6 +1985,7 @@ export type Visits_Min_Order_By = {
   heart_rate?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   medication?: InputMaybe<Order_By>;
+  medication_amount?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
   nurse_id?: InputMaybe<Order_By>;
   pain_level?: InputMaybe<Order_By>;
@@ -2013,6 +2020,7 @@ export type Visits_Order_By = {
   heart_rate?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   medication?: InputMaybe<Order_By>;
+  medication_amount?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
   nurse?: InputMaybe<Nurses_Order_By>;
   nurse_id?: InputMaybe<Order_By>;
@@ -2045,6 +2053,8 @@ export enum Visits_Select_Column {
   /** column name */
   Medication = 'medication',
   /** column name */
+  MedicationAmount = 'medication_amount',
+  /** column name */
   Note = 'note',
   /** column name */
   NurseId = 'nurse_id',
@@ -2069,6 +2079,7 @@ export type Visits_Set_Input = {
   heart_rate?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
+  medication_amount?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
@@ -2176,6 +2187,7 @@ export type Visits_Stream_Cursor_Value_Input = {
   heart_rate?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   medication?: InputMaybe<Scalars['String']['input']>;
+  medication_amount?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   nurse_id?: InputMaybe<Scalars['Int']['input']>;
   pain_level?: InputMaybe<Scalars['Int']['input']>;
@@ -2228,6 +2240,8 @@ export enum Visits_Update_Column {
   Id = 'id',
   /** column name */
   Medication = 'medication',
+  /** column name */
+  MedicationAmount = 'medication_amount',
   /** column name */
   Note = 'note',
   /** column name */
@@ -2339,7 +2353,7 @@ export type GetPatientQueryVariables = Exact<{
 }>;
 
 
-export type GetPatientQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', name: string, phone: string, email: string, visits: Array<{ __typename?: 'visits', administration_location: string, administration_time: any, medication: string, pain_level?: number | null, heart_rate?: number | null, systolic_pressure?: number | null, diastolic_pressure?: number | null, tolerance?: string | null, note?: string | null, nurse?: { __typename?: 'nurses', name: string, phone: string } | null }> }> };
+export type GetPatientQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', name: string, phone: string, email: string, visits: Array<{ __typename?: 'visits', administration_location: string, administration_time: any, medication: string, medication_amount?: string | null, pain_level?: number | null, heart_rate?: number | null, systolic_pressure?: number | null, diastolic_pressure?: number | null, tolerance?: string | null, note?: string | null, nurse?: { __typename?: 'nurses', name: string, phone: string } | null }> }> };
 
 export type AllPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2347,5 +2361,5 @@ export type AllPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllPatientsQuery = { __typename?: 'query_root', patients: Array<{ __typename?: 'patients', id: number, name: string }> };
 
 
-export const GetPatientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPatient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"visits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"administration_location"}},{"kind":"Field","name":{"kind":"Name","value":"administration_time"}},{"kind":"Field","name":{"kind":"Name","value":"medication"}},{"kind":"Field","name":{"kind":"Name","value":"pain_level"}},{"kind":"Field","name":{"kind":"Name","value":"heart_rate"}},{"kind":"Field","name":{"kind":"Name","value":"systolic_pressure"}},{"kind":"Field","name":{"kind":"Name","value":"diastolic_pressure"}},{"kind":"Field","name":{"kind":"Name","value":"tolerance"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"nurse"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPatientQuery, GetPatientQueryVariables>;
+export const GetPatientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPatient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"visits"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"administration_time"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"administration_location"}},{"kind":"Field","name":{"kind":"Name","value":"administration_time"}},{"kind":"Field","name":{"kind":"Name","value":"medication"}},{"kind":"Field","name":{"kind":"Name","value":"medication_amount"}},{"kind":"Field","name":{"kind":"Name","value":"pain_level"}},{"kind":"Field","name":{"kind":"Name","value":"heart_rate"}},{"kind":"Field","name":{"kind":"Name","value":"systolic_pressure"}},{"kind":"Field","name":{"kind":"Name","value":"diastolic_pressure"}},{"kind":"Field","name":{"kind":"Name","value":"tolerance"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"nurse"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPatientQuery, GetPatientQueryVariables>;
 export const AllPatientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allPatients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"patients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<AllPatientsQuery, AllPatientsQueryVariables>;

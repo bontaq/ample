@@ -1,3 +1,5 @@
+import { styled } from "styled-components";
+
 type Props = {
   name: string;
   phone: string;
@@ -5,11 +7,15 @@ type Props = {
 };
 
 const Patient = ({ name, phone, email }: Props) => (
-  <div>
+  <View>
     <h1>{name}</h1>
     <p>{phone}</p>
     <p>{email}</p>
-  </div>
+  </View>
 );
+
+const View = styled.div`
+  margin: 0 60px;
+`;
 
 export default Patient;
