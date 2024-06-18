@@ -4,9 +4,10 @@ import Chart from "./Chart";
 
 type Props = {
   visits: GetPatientQuery["patients"][number]["visits"];
+  focus: string | null;
 };
 
-const Summary = ({ visits }: Props) => {
+const Summary = ({ visits, focus }: Props) => {
   // dates oldest first for charting
   const orderedVisits = visits.slice().reverse();
 
@@ -37,14 +38,27 @@ const Summary = ({ visits }: Props) => {
     <Container>
       <h1>Summary</h1>
       <Charts>
-        <Chart title="Heart Rate" values={heartRateData} />
-        <Chart title="Blood Pressure" values={bloodPressureData} />
-        <Chart title="Pain" values={painData} />
+        <Chart
+          title="Heart Rate"
+          values={heartRateData}
+          focused={focus === "heart-rate"}
+        />
+        <Chart
+          title="Blood Pressure"
+          values={bloodPressureData}
+          focused={focus === "blood-pressure"}
+        />
+        <Chart
+          title="Pain"
+          values={painData}
+          focused={focus === "pain"}
+        />
         <Chart
           title="Tolerance"
           values={toleranceData}
           kind="band"
           domain={["poor", "fair", "good"]}
+          focused={focus === "tolerance"}
         />
       </Charts>
     </Container>

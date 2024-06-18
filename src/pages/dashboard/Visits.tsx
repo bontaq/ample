@@ -4,6 +4,7 @@ import Visit from "./Visit";
 
 type Props = {
   visits: GetPatientQuery["patients"][number]["visits"];
+  focus: string | null;
 };
 
 const Visits = ({ visits }: Props) => (

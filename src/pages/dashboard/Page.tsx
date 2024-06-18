@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useQuery } from "@apollo/client";
-import { RouteComponentProps } from "wouter";
+import { RouteComponentProps, useSearch } from "wouter";
 import { gql } from "../../generated";
 import Patient from "./Patient";
 import Summary from "./Summary";
@@ -38,6 +38,9 @@ const Page: PageType = ({ params }) => {
   const { loading, data, error } = useQuery(GET_PATIENT, {
     variables: { id: parseInt(params.id) },
   });
+  const rawSearch = useSearch();
+  const searchParams = new URLSearchParams(`?${rawSearch}`);
+  const focus = searchParams.get("focus");
 
   if (loading) {
     return null;
@@ -55,14 +58,15 @@ const Page: PageType = ({ params }) => {
     return <h2>Data integrity problem with patient id: {params.id}</h2>;
   }
 
+
   return (
     <Container>
       {data?.patients.map((patient) => (
         <>
           <Patient {...patient} />
           <div>
-            <Summary visits={patient.visits} />
-            <Visits visits={patient.visits} />
+            <Summary visits={patient.visits} focus={focus} />
+            <Visits visits={patient.visits} focus={focus} />
           </div>
         </>
       ))}

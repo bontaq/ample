@@ -17,6 +17,7 @@ type Props = {
   kind?: string;
   domain?: Array<number | string>;
   values: Array<Value>;
+  focused: boolean;
 };
 
 const theme = buildChartTheme({
@@ -31,8 +32,8 @@ const theme = buildChartTheme({
   },
 });
 
-const Chart = ({ values, kind, title, domain }: Props) => (
-  <Container>
+const Chart = ({ values, kind, title, domain, focused }: Props) => (
+  <Container focused={focused}>
     <h4>{title}</h4>
     <XYChart
       height={250}
@@ -85,6 +86,8 @@ const Chart = ({ values, kind, title, domain }: Props) => (
   </Container>
 );
 
-const Container = styled.div``;
+const Container = styled.div<{ focused: boolean }>`
+  ${props => props.focused ? 'border: 1px solid black' : ''}
+`;
 
 export default Chart;
